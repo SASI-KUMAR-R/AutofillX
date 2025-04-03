@@ -4,14 +4,15 @@
   "version": "1.0",
   "description": "Automatically fills forms with user data.",
   "permissions": ["storage", "activeTab", "scripting"],
-  "host_permissions": ["*://*/*"],
+  "host_permissions": ["http://*/*", "https://*/*"],  
   "background": {
     "service_worker": "scripts/background.js"
   },
   "content_scripts": [
     {
-      "matches": ["*://*/*"],
-      "js": ["scripts/content.js"]
+      "matches": ["http://*/*", "https://*/*"], 
+      "js": ["scripts/content.js"],
+      "run_at": "document_start"
     }
   ],
   "action": {

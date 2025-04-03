@@ -1,12 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
     const signInBtn = document.getElementById("sign-in");
-    const fillFormBtn = document.getElementById("fill-form"); // Uncommented for use
+    const fillFormBtn = document.getElementById("fill-form");
 
-    // Check if user is already signed in
+    if (!signInBtn || !fillFormBtn) {
+        console.error("❌ Buttons not found in popup.html.");
+        return;
+    }
+
     chrome.storage.local.get(["userEmail", "userDetails"], (data) => {
         if (data.userEmail) {
             signInBtn.style.display = "none";
             fillFormBtn.style.display = "block";
+        } else {
+            fillFormBtn.style.display = "none";
         }
     });
 
@@ -20,11 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(response => {
                 if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
-                return response.json(); // Direct JSON parsing
+                return response.json();
             })
             .then(data => {
                 if (data.success) {
-                    // Store user details in local storage
                     chrome.storage.local.set({ userEmail: email, userDetails: data.user.details }, () => {
                         signInBtn.style.display = "none";
                         fillFormBtn.style.display = "block";
@@ -38,27 +43,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     fillFormBtn.addEventListener("click", () => {
-        chrome.storage.local.get("userDetails", (data) => {
-            if (!data.userEmail) {
-                alert("No saved details found! Please sign in first.");
-                
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            if (!tabs.length) {
+                console.error("❌ No active tab found.");
                 return;
             }
-            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-                chrome.scripting.executeScript({
-                    target: { tabId: tabs[0].id },
-                    function: autofillForm,
-                    args: [data.userDetails]
+
+            // Ensure content script is injected
+            chrome.scripting.executeScript({
+                target: { tabId: tabs[0].id },
+                files: ["scripts/content.js"]
+            }, () => {
+                console.log("✅ Content script injected, sending message...");
+                
+                chrome.tabs.sendMessage(tabs[0].id, { action: "extractForm" }, (response) => {
+                    if (chrome.runtime.lastError) {
+                        console.error("❌ Error sending message:", chrome.runtime.lastError.message);
+                    } else {
+                        console.log("📩 Message sent to content.js", response);
+                    }
                 });
             });
         });
     });
 });
-
-function autofillForm(userDetails) {
-    document.querySelectorAll("input, textarea, select").forEach(input => {
-        if (userDetails[input.name]) {
-            input.value = userDetails[input.name];
-        }
-    });
-}

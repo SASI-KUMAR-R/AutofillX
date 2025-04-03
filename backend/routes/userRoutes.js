@@ -2,18 +2,7 @@ const express = require("express");
 const User = require("../models/UserData");
 const router = express.Router();
 
-router.post("/login", async (req, res) => {
-  const { email } = req.body;
-  let user = await User.findOne({ email });
-  if (!user) user = await User.create({ email, details: {} });
-  res.json(user);
-});
 
-router.post("/update", async (req, res) => {
-  const { email, details } = req.body;
-  await User.findOneAndUpdate({ email }, { details }, { new: true });
-  res.json({ message: "User details updated!" });
-});
 
 router.post("/signin", async (req, res) => {
    

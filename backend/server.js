@@ -12,7 +12,7 @@ mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.log(err));
 
-app.use("/api/forms",formRoutes);
+app.use("/api/form",formRoutes);
 app.use("/api/user", userRoutes);
 
 const PORT = process.env.PORT || 5000 ;
