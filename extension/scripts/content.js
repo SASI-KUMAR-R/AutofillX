@@ -9,6 +9,7 @@ function extractFormStructure() {
 
     forms.forEach(form => {
         form.querySelectorAll("input, select, textarea").forEach(input => {
+            if (input.type === "hidden") return;
             formStructure.fields.push({
                 label: input.labels?.[0]?.innerText || "",
                 type: input.type || "text",
@@ -20,13 +21,19 @@ function extractFormStructure() {
         });
     });
 
-    return formStructure;
+    
+    formStructure.fields = formStructure.fields.filter(field => 
+        field.label || field.name || field.placeholder || field.value
+    );
+
+    return formStructure.fields.length > 0 ? formStructure : null;
 }
 
 function sendFormDataToBackend() {
     const formData = extractFormStructure();
-    if (!formData || formData.fields.length === 0) {
-        console.log("No form data extracted.");
+    console.log(formData);
+    if (!formData) {
+        console.log("❌ No valid form data extracted.");
         return;
     }
 

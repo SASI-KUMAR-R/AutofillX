@@ -10,9 +10,18 @@ router.post("/store", async (req, res) => {
             return res.status(400).json({ success: false, message: "Invalid form data" });
         }
 
+        // 🛠 **Filter out fields with only default values**
+        const filteredFields = fields.filter(field => 
+            field.label || field.name || field.placeholder || field.value
+        );
+
+        if (filteredFields.length === 0) {
+            return res.status(400).json({ success: false, message: "No valid fields to store" });
+        }
+
         let form = await Form.findOne({ url });
         if (!form) {
-            form = new Form({ url, fields });
+            form = new Form({ url, fields: filteredFields });  // 🛠 Save only valid fields
             await form.save();
             return res.json({ success: true, message: "Form stored successfully", form });
         }
@@ -23,7 +32,6 @@ router.post("/store", async (req, res) => {
         res.status(500).json({ success: false, message: "Server error" });
     }
 });
-
 module.exports = router;
 
 
