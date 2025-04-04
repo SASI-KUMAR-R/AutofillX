@@ -49,19 +49,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // Ensure content script is injected
             chrome.scripting.executeScript({
                 target: { tabId: tabs[0].id },
                 files: ["scripts/content.js"]
             }, () => {
                 console.log("✅ Content script injected, sending message...");
-                
-                chrome.tabs.sendMessage(tabs[0].id, { action: "extractForm" }, (response) => {
-                    if (chrome.runtime.lastError) {
-                        console.error("❌ Error sending message:", chrome.runtime.lastError.message);
-                    } else {
-                        console.log("📩 Message sent to content.js", response);
+
+                chrome.storage.local.get("userEmail", (data) => {
+                    if (!data.userEmail) {
+                        console.error("❌ No user email found in storage.");
+                        return;
                     }
+
+                    chrome.tabs.sendMessage(tabs[0].id, {
+                        action: "extractForm",
+                        email: data.userEmail    // ✅ send email to content.js
+                    }, (response) => {
+                        if (chrome.runtime.lastError) {
+                            console.error("❌ Error sending message:", chrome.runtime.lastError.message);
+                        } else {
+                            console.log("📩 Message sent to content.js", response);
+                        }
+                    });
                 });
             });
         });
