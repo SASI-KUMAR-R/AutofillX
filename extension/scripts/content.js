@@ -21,7 +21,6 @@ function extractFormStructure() {
         });
     });
 
-    
     formStructure.fields = formStructure.fields.filter(field => 
         field.label || field.name || field.placeholder || field.value
     );
@@ -33,7 +32,7 @@ function extractFormStructure() {
 
 
 async function fetchUserDetails(email) {
-    const response = await fetch("http://localhost:5000/api/user/getDetails", {
+    const response = await fetch("http://localhost:5050/api/user/getDetails", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email })
@@ -47,7 +46,7 @@ async function fetchUserDetails(email) {
 
 
 async function storeMissingDetails(email, updatedFields) {
-    const response = await fetch("http://localhost:5000/api/user/updateDetails", {
+    const response = await fetch("http://localhost:5050/api/user/updateDetails", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, details: updatedFields })
@@ -87,7 +86,7 @@ function sendFormDataToBackend(formData) {
         return;
     }
 
-    return fetch("http://localhost:5000/api/form/store", {
+    return fetch("http://localhost:5050/api/form/store", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)

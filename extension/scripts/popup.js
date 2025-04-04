@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     signInBtn.addEventListener("click", () => {
         const email = prompt("Enter your email:");
         if (email) {
-            fetch("http://localhost:5000/api/user/signin", {
+            fetch("http://localhost:5050/api/user/signin", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email })
