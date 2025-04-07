@@ -4,13 +4,13 @@ const fieldSchema = new mongoose.Schema({
     label: { type: String, default: ""},
     type: { type: String, default: "" },
     name: { type: String, default: ""},
-    placeholder: { type: String, default: "" },  // Default empty string for consistency
+    placeholder: { type: String, default: "" },  
     value: { type: String, default: "" }, 
-    required: { type: Boolean, default: false }  // New field: Helps identify mandatory fields
+    required: { type: Boolean, default: false }  
 });
 
 const formSchema = new mongoose.Schema({
-    url: { type: String, required: true, unique: true, index: true }, // Indexing for faster queries
+    url: { type: String, required: true, unique: true, index: true }, 
     fields: [fieldSchema] 
 }, { timestamps: true });
 

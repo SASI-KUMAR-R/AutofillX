@@ -3,60 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <title>Extended Sample Form</title>
+  <link rel="stylesheet" href="test3.css" />
 </head>
 <body>
   <form>
-    <label for="country">Country:</label>
-    <input type="text" id="country" name="country" value="ertyuio"><br><br>
+    <div class="form-group">
+      <input type="text" id="country" name="country" placeholder=" " >
+      <label for="country">Country</label>
+    </div>
 
-    <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" name="dob" value="2004-05-28"><br><br>
+    <div class="form-group">
+      <input type="date" id="dob" name="dob" placeholder=" " >
+      <label for="dob">Date of Birth</label>
+    </div>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="1@1"><br><br>
+    <div class="form-group">
+      <input type="email" id="email" name="email" placeholder=" " >
+      <label for="email">Email</label>
+    </div>
 
-    <label for="phone">Phone Number:</label>
-    <input type="tel" id="phone" name="phone" value="1234567890"><br><br>
+    <div class="form-group">
+      <input type="tel" id="phone" name="phone" placeholder=" " >
+      <label for="phone">Phone Number</label>
+    </div>
 
-    <label for="fullName">fullName:</label>
-    <input type="text" id="fullName" name="fullName" value="sai"><br><br>
+    <div class="form-group">
+      <input type="text" id="fullName" name="fullName" placeholder=" " >
+      <label for="fullName">Full Name</label>
+    </div>
 
-    <label for="FullName">Full Name:</label>
-    <input type="text" id="FullName" name="FullName" value="dfghbnm,"><br><br>
+    <div class="form-group">
+      <input type="text" id="FullName" name="FullName" placeholder=" " >
+      <label for="FullName">Full Name (Alt)</label>
+    </div>
 
-    <label for="marital">Marital Status:</label>
-    <input type="text" id="marital" name="marital" value="ghjkl./"><br><br>
+    <div class="form-group">
+      <input type="text" id="marital" name="marital" placeholder=" " >
+      <label for="marital">Marital Status</label>
+    </div>
 
-    <label for="area">Area:</label>
-    <input type="text" id="area" name="area" value="fghjkl"><br><br>
+    <div class="form-group">
+      <input type="text" id="area" name="area" placeholder=" " >
+      <label for="area">Area</label>
+    </div>
 
-    <!-- ✅ NEW FIELDS BELOW -->
+    <div class="form-group">
+      <select id="gender" name="gender">
+        <option value=""></option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+      <label for="gender">Gender</label>
+    </div>
 
-    <label for="gender">Gender:</label>
-    <select id="gender" name="gender">
-      <option value="">Select</option>
-      <option value="male">Male</option>
-      <option value="female">Female</option>
-      <option value="other">Other</option>
-    </select><br><br>
+    <div class="form-group">
+      <input type="text" id="nationality" name="nationality" placeholder=" ">
+      <label for="nationality">Nationality</label>
+    </div>
 
-    <label for="nationality">Nationality:</label>
-    <input type="text" id="nationality" name="nationality"><br><br>
+    <div class="form-group">
+      <input type="text" id="occupation" name="occupation" placeholder=" ">
+      <label for="occupation">Occupation</label>
+    </div>
 
-    <label for="occupation">Occupation:</label>
-    <input type="text" id="occupation" name="occupation"><br><br>
+    <div class="form-group">
+      <textarea id="address" name="address" placeholder=" " rows="3" cols="50"></textarea>
+      <label for="address">Address</label>
+    </div>
 
-    <label for="address">Address:</label><br>
-    <textarea id="address" name="address" rows="3" cols="50" placeholder="Enter your address..."></textarea><br><br>
+    <div class="form-group">
+      <input type="url" id="linkedin" name="linkedin" placeholder=" ">
+      <label for="linkedin">LinkedIn Profile</label>
+    </div>
 
-    <label for="linkedin">LinkedIn Profile:</label>
-    <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/yourprofile"><br><br>
+    <div class="form-group file-upload">
+      <label for="resume" class="file-label">Upload Resume</label>
+      <div class="custom-file-wrapper">
+        <input type="file" id="resume" name="resume">
+        <span class="file-name" id="file-name">No file chosen</span>
+      </div>
+    </div>
+    
+    
 
-    <label for="resume">Upload Resume:</label>
-    <input type="file" id="resume" name="resume"><br><br>
-
-    <label for="additionalInfo">Additional Information:</label><br>
-    <textarea id="additionalInfo" name="additionalInfo" rows="4" cols="50" placeholder="Enter any extra info here..."></textarea><br><br>
+    <div class="form-group">
+      <textarea id="additionalInfo" name="additionalInfo" placeholder=" " rows="4" cols="50"></textarea>
+      <label for="additionalInfo">Additional Information</label>
+    </div>
 
     <input type="submit" value="Submit">
   </form>

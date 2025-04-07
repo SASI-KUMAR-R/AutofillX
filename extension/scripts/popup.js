@@ -1,23 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
     const signInBtn = document.getElementById("sign-in");
     const fillFormBtn = document.getElementById("fill-form");
+    const emailContainer = document.getElementById("email-container");
+    const emailInput = document.getElementById("email-input");
 
-    if (!signInBtn || !fillFormBtn) {
-        console.error("❌ Buttons not found in popup.html.");
+    if (!signInBtn || !fillFormBtn || !emailContainer || !emailInput) {
+        console.error("❌ Required elements not found in popup.html.");
         return;
     }
 
     chrome.storage.local.get(["userEmail", "userDetails"], (data) => {
         if (data.userEmail) {
             signInBtn.style.display = "none";
+            emailContainer.style.display = "none";
             fillFormBtn.style.display = "block";
         } else {
+            emailContainer.style.display = "none";
             fillFormBtn.style.display = "none";
         }
     });
 
+    let emailInputShown = false;
+
     signInBtn.addEventListener("click", () => {
-        const email = prompt("Enter your email:");
+        if (!emailInputShown) {
+            emailContainer.style.display = "block";
+            emailInput.focus();
+            emailInputShown = true;
+            return;
+        }
+
+        const email = emailInput.value.trim();
         if (email) {
             fetch("http://localhost:5050/api/user/signin", {
                 method: "POST",
@@ -32,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (data.success) {
                     chrome.storage.local.set({ userEmail: email, userDetails: data.user.details }, () => {
                         signInBtn.style.display = "none";
+                        emailContainer.style.display = "none";
                         fillFormBtn.style.display = "block";
                     });
                 } else {
@@ -39,6 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             })
             .catch(error => console.error("Fetch Error:", error));
+        } else {
+            alert("Please enter a valid email.");
         }
     });
 
@@ -63,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     chrome.tabs.sendMessage(tabs[0].id, {
                         action: "extractForm",
-                        email: data.userEmail    // ✅ send email to content.js
+                        email: data.userEmail
                     }, (response) => {
                         if (chrome.runtime.lastError) {
                             console.error("❌ Error sending message:", chrome.runtime.lastError.message);

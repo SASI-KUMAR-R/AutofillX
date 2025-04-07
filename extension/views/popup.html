@@ -5,10 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AutoForm</title>
     <link rel="stylesheet" href="../styles/popup.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            width: 250px;
+            padding: 15px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        #email-container {
+            margin-top: 10px;
+        }
+
+        #email-input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #007BFF;
+        }
+
+        #fill-form {
+            background-color: #007BFF;
+        }
+
+        #fill-form:hover {
+            background-color: #0069d9;
+        }
+    </style>
 </head>
 <body>
     <h2>AutoForm</h2>
     <p>Automatically fill forms with saved data.</p>
+
+    <div id="email-container" style="display: none;">
+        <input type="email" id="email-input" placeholder="Enter your email" />
+    </div>
 
     <button id="sign-in">Sign In</button>
     <button id="fill-form" style="display: none;">Fill Form</button>
